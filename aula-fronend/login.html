@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>JapaBet - Login</title>
+        <script>
+            // Estudar o DOM - Document Object Model
+            function showFormData(){
+                var email = document.getElementById("fieldEmail").value;
+                var password = document.getElementById("fieldPassword").value;
+                console.info(email);
+                console.info(password);
+            }
+        </script>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: rgb(202, 171, 171);
+                color: rgb(85, 0, 0);
+            }
+            /*
+            h1 {
+                border: 2px solid red ;
+            }
+            form {
+                border: 2px solid yellow ;
+            }
+            p {
+                border: 2px solid pink ;
+            }
+            */
+            /*DESAFIO: Colocar essa div no centro da página*/
+            #boxLogin {
+                background-color: rgb(187, 177, 243);
+                max-width: 30%;
+                border: 5px solid rgb(176, 223, 101);
+                padding: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="boxLogin">
+            <h1>JapaBET</h1>
+            <form>
+                <p>
+                    <label for="fieldEmail">Email:</label><br>
+                    <input type="text" id="fieldEmail">
+                </p>
+                <p>
+                    <label for="fieldPassword">Password:</label><br>
+                    <input type="password" id="fieldPassword">
+                </p>
+                <button type="button" onclick="showFormData">Sing in</button>
+            </form>
+        </div>
+    </body>
+</html>
