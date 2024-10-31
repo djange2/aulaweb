@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login Integração</title>
+        <style>
+            body{
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            #messageBox{
+                background-color: darkred;
+                border: 3px solid red;
+                color: white;
+                margin-top: 10px;
+                padding: 0;
+                display: none;
+            }
+            #messageBox p{
+                margin: 10px;
+                padding: 0;
+            }
+        </style>
+        <script>
+            function showErrorMessage(messageContent){
+                //atribuir texto da mensagem ao paragrafo
+                document.getElementById("messageBox").innerHTML = messageContent;
+                var divMb = document.getElementById("messageBox");
+                //exibir div de erro
+                divMb.style.display = "block";
+            }
+            function cleanError(){
+                var divMb = document.getElementById("messageBox");
+                divMb.style.display = "none";
+            }
+            // verifica se o formulário está válido (preenchido corretamente)
+            // se estiver retorna true, senão, false
+            function isValid(email, password){
+                var valid = false;
+                if(email.length > 0 && password.length > 0){
+                    valid = true;
+                }else if(email.length == 0 && password.length == 0){
+                    showErrorMessage("Please type your email and password");
+                }else if(email.length == 0){
+                    showErrorMessage("Please fill your email field");
+                }else{
+                    showErrorMessage("Please fill your password field");
+                }
+                return valid;
+            }
+            performSignIn();{
+                var email = document.getElementById("fieldEmail").value;
+                var password = document.getElementById("fieldPassword").value;
+
+                // remover eventuais espaços em branco do email e senha (antes,depois)
+                email = email.trim();
+                password = password.trim();
+
+                if(isValid(email, password)){
+                    const reqHeaders = new Headers();
+                    reqHeaders.append("Content-Type", "text/plain");
+                    reqHeaders.append("email", email);
+                    reqHeaders.append("password", password);
+
+                    // prosseguir com a chamada do backend
+                    const response = await fetch(
+                        "http://172.16.13.48:300/login",
+                        {
+                            method: "POST",
+                            headers: reqHeaders
+                        }
+                    );
+                    if(response.ok){
+
+                    }else{
+                        showErrorMessage(response.text);
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>login</h1>
+        <form>
+            <p>
+                <label for="fieldEmail">email:</label><br>
+                <input type="text" id="fieldEmail" onfocus="cleanError()">
+            </p>
+            <p>
+                <label for="fieldPassword">password:</label><br>
+                <input type="text" id="fieldPassword" onfocus="cleanError()">
+            </p>
+            <button type="button" id="btnSignIn" onclick="performSignIn()">Sign In</button>
+        </form>
+        <div id="messageBox">
+            <p id="message"></p>
+        </div>
+    </body>
+</html>
